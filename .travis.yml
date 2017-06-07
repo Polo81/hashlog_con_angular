@@ -1,3 +1,6 @@
+dist: trusty
+sudo: required
+
 language: node_js
 node_js:
   - "iojs"
@@ -6,7 +9,6 @@ node_js:
 before_install:
   - node -v
   - npm -v
-  - sudo apt-get install build-essential
   - npm install -g ethereumjs-testrpc
   - npm install -g truffle
 
