@@ -1,0 +1,39 @@
+{
+  "contract_name": "HashLogContract",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "hash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "hashlog",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_hash",
+          "type": "bytes32"
+        }
+      ],
+      "name": "hashloged",
+      "type": "event"
+    }
+  ],
+  "unlinked_binary": "0x606060405234610000575b60ad806100186000396000f300606060405263ffffffff60e060020a6000350416630f9f236581146022575b6000565b34600057602f6004356031565b005b60408051828152905173ffffffffffffffffffffffffffffffffffffffff3316917fff8ff25d3a0700f7193619540be5ff2ea347995aa7d38d41c40be2ceab6b4176919081900360200190a25b505600a165627a7a72305820fb35d789282d64eb84a2fe15822cfa91cb9afb76d42778b5eaa3c5ce9dabc9460029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1495635169187
+}

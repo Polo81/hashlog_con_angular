@@ -1,0 +1,25 @@
+.h2{
+  text-align: center;
+  text-color: black;
+}
+
+.container{
+  font-family: "arial";
+  margin-right: auto;
+  margin-left: 125px;
+
+}
+
+
+#drop_area {
+    width: 350px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}
+
+.jumbotron {
+  margin: 10px auto;
+  background: #7986CF;
+  color: floralwhite;
+}
