@@ -1,0 +1,6 @@
+npm install ethereumjs-testrpc --msvs_version=2015
+
+That error TRK0005 error means node-gyp can't find a compiler. Make sure you have VS 2013 or 2015 installed and that it's on the path.
+
+VS comes with a vcvars.bat file that sets up the environment, make sure you run it.
+
