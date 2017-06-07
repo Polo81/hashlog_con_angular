@@ -4,3 +4,6 @@ That error TRK0005 error means node-gyp can't find a compiler. Make sure you hav
 
 VS comes with a vcvars.bat file that sets up the environment, make sure you run it.
 
+
+MODIFICACION
+
