@@ -6,7 +6,7 @@ node_js:
 before_install:
   - node -v
   - npm -v
-  - apt-get install build-essential
+  - sudo apt-get install build-essential
   - npm install -g ethereumjs-testrpc
   - npm install -g truffle
 
