@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="hashlogApp">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>App for hashing text or documents and send them to a testRPC client (and then to the Blockchain)</title>
+
+    <!-- STYLES DEPENDENCIES -->
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css" rel="stylesheet">
+    <link href="./hashlog.css" rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+</head>
+
+
+<body>
+  <!-- HTML AREA (OR VIEWS/TEMPLATES TO BE LOADED) -->
+  <header class="jumbotron">
+    <div class="container">
+      <div class="row row-header">
+        <div class="col-xs-12 col-sm-8">
+          <h3>PROOF OF CONCEPT: </h3>
+        </h3>HASH A TEXT OR DOCUMENT AND SEND THE HASH TO THE BLOCKCHAIN</h3>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="container" ng-controller="HashController" ng-init="initialize_data_model()">
+    <div class="row">
+        <div class="col-xs-12 col-sm-2">
+            <h4>Your Account:</h4>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          <p id="cuenta"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-2">
+          <h4>Your Balance:</h4>
+        </div>
+        <div class="col-xs-12 col-sm-8">
+          <p id="balance"></p>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+          <h4>Introduce the text to hash:</h4>
+      </div>
+    </div>
+      <form>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-xs-12 col-sm-7">
+              <textarea type="text" class="form-control" placeholder="Text.." id="textoIn" ng-change="delete_hash()" ng-model="text_to_hash"></textarea>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+              <button ng-click="hash_it()" class="warning" style="margin-top: 5px; padding: 10px;">Hash it!</button>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-xs-12 col-sm-7">
+              <input type="text" id="hash_input" class="form-control" placeholder="Hashed" disabled></input>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+              <button id="certify_button"  ng-click="certify()" class="warning" data-toggle="modal" data-target="#myModal" style="margin-top: 5px;" >Send to Blockchain</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <br></br>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8">
+            <h4>Upload a document for hashing: </h4>
+        </div>
+      </div>
+      <!--<div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <input type='file' onchange='openFile(event)'>
+        </div>
+      </div>
+      <br></br>
+      <div class="row">-->
+        <!--<div class="col-xs-12 col-sm-8 col-sm-offset-1">
+            <div id="drop_area" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+      </div>-->
+
+      <div class="row">
+          <div class="col-xs-12 col-sm-10">
+              <form action="/file-upload" class="dropzone" id="mydropzone">
+                  <div class="dz-default dz-message">
+                      <span>Drop files here..</span>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+
+      <!--<div class="row">
+        <div class="col-xs-12 col-sm-8">
+            <p>Upload progress: <progress id="uploadprogress" min="0" max="100" value="0">0</progress></p>
+        </div>
+      </div>
+      <br></br>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-sm-offset-3">
+            <img id="img_draggable" src="images/pizza.png" draggable="true" ondragstart="drag(event)" width="80" height="50">
+        </div>
+      </div>-->
+
+
+
+      <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Transaction Result</h4>
+                </div>
+                <div class="modal-body">
+                  <h4>Your transaction was successful!</h4>
+                  <p>Transaction Number: {{transaction_number}}</p>
+                  <p>Gas Usage: {{gas_usage}}</p>
+                  <p>Block Number: {{block_number}}</p>
+                  <p>Block Time: {{block_time}}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+
+  </div> <!--Container's end-->
+
+
+<!-- JAVASCRIPT DEPENDENCIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="./web3.js"></script>
+    <script src="scripts/controllers.js"></script>
+    <script src="scripts/services.js"></script>
+    <!--<script src="./dragdropcontrol.js"></script>-->
+    <!--<script src="./dropzone.js"></script>-->
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+
+    <script>
+          Dropzone.options.mydropzone = {
+              paramName: "file",
+              maxFilesize: 2, // Mb
+              //init: inicializamos los eventos de dropzone cuando éste se carga. El evento de añadir un fichero.
+              init: function() {
+                  this.on("addedfile", function(file) {
+                      //alert("Added file.");
+                      file.previewElement.addEventListener("click", function() {
+                            alert("Click on the file");
+                            //Le quito el aspa al thumbnail
+                            //file.previewElement.dz-error-message =
+                            //$(file.previewTemplate).find('.dz-error-message').attr('id', "document-" + file.serverId);
+                            //$(file.previewElement).find('.dz-error-message').text(response);
+                      });
+                  });
+              },
+              //Con accept, proceso el documento antes de subirlo. Si meto un texto cualquiera de error a la función 'done', no se ejecutará
+              // el upload del fichero. Al parecer, en el evento de 'addedfile' no sólo añade el fichero, si no que también
+              // lo intenta subir y se produce un error de XMLHttpRequest (entiendo que si le indico un server para subirlo  no daría problemas)
+              accept: function(file, done) {
+                        //alert("accept area");
+                        done("File ready for being hashed");
+              }
+          };
+    </script>
+
+    <script>
+       $(document).ready(function(){
+          // Check that your browser has  support of HTML5 File API. Conviene hacerlo por si acaso, ya que es lo mínimo que se necesita
+          // para gestionar y subir ficheros en un frontend moderno (además creo que dropzone trabaja con esto por debajo)
+          if (window.File && window.FileReader && window.FileList && window.Blob) {
+            // Great success! All the File APIs are supported.
+          } else {
+            alert('The File APIs are not fully supported in this browser.');
+          }
+       });
+    </script>
+</body>
+
+</html>
